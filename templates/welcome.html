@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+    <script type="text/javascript" src="static/js/Channel_creation.js"></script>
+    <meta charset="utf-8">
+    <title>Welcome</title>
+  </head>
+  <body>
+    <p>Hello, Mr. Dear {{ name }}!</p>
+    <form id="channel_create_form">
+      <input id="channel_name" placeholder="Type the name of the channel" name="channel_name">
+      <input type="submit" id="channel_create_button">Create channel</input>
+    </form>
+    <ul id="channel_list">
+    </ul>
+  </body>
+</html>
