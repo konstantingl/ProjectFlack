@@ -1,3 +1,8 @@
+const template = Handlebars.compile(document.querySelector('#channel_panel').innerHTML);
+
+  // Put all exsisting channels in list
+document.addEventListener('DOMContentLoaded', load);
+
 document.addEventListener('DOMContentLoaded', () => {
 
   var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
@@ -9,13 +14,21 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 });
 
-  socket.on('announce creation', data => {
-    const li = document.createElement('li');
-    var name = data.channel_name;
-    var time = data.creation_time;
-    var host = data.channel_host;
-    li.innerHTML = 'Channel name: ' + name + '; ' + 'Creation time:' + time + '; ' + 'Channel host: ' + host;
-    document.querySelector('#channel_list').append(li);
-  });
-
+  socket.on('announce creation', add_channel);
+    // const content = template({'channel_name': data.channel_name});
+    // document.querySelector('#channel_list').innerHTML += content;
 });
+
+function load() {
+  const request = new XMLHttpRequest();
+  request.open('POST', '/channels');
+  request.onload = () => {
+      const data = JSON.parse(request.responseText);
+      data.forEach(add_channel);
+  };
+};
+
+function add_channel(data) {
+  const content = template({'channel_name': data.channel_name});
+  document.querySelector('#channel_list').innerHTML += content;
+};

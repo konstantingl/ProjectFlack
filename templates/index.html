@@ -1,15 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/stylesheet.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <meta charset="utf-8">
     <title>Login page</title>
   </head>
   <body>
-    <form action="{{ url_for('login') }}" method="post">
-    <input type="text" name="nickname" placeholder="Enter your nickname">
-        {% if error %}
-            <li>{{ error }}</li>
-        {% endif %}
-    <button>Login</button>
+    <div class="container">
+      <h2>Flack log in form</h2>
+          <form action="{{ url_for('login') }}" method="post">
+            <div class="form-group">
+              <label for="email">Your Login:</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                <input type="text" class="form-control" name="nickname" placeholder="Enter your nickname">
+              </div>
+                    {% if error %}
+                        <p>{{ error }}</p>
+                    {% endif %}
+
+              <button class="btn btn-default">Login</button>
+            </div>
+          </form>
+      </div>
   </body>
 </html>
