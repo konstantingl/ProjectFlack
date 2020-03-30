@@ -7,7 +7,7 @@
     <script id="channel_panel" type="text/template">
       <div class="panel panel-default">
         <div class="panel-heading">{% raw -%}{{ channel_name }}{%- endraw %}</div>
-        <div class="panel-body">Panel Content</div>
+        <div class="panel-body">Made by {% raw -%}{{ channel_host }}{%- endraw %}</div>
       </div>
     </script>
 
@@ -28,10 +28,11 @@
             <div class="form-group">
               <input id="channel_name" type="text" class="form-control" placeholder="Type the name of the channel" name="channel_name">
               <input type="submit" id="channel_create_button" value="Create channel" class="btn btn-success"></input>
+              <p id="error" class="text-warning"></p>
             </div>
           </form>
+          <h3>Channel list<h3>
           <div id="channel_list">
-            <h3>Channel list<h3>
           </div>
   </div>
   </body>

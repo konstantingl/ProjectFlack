@@ -14,7 +14,7 @@ socketio = SocketIO(app)
 Session(app)
 
 users = []
-channels = []
+channels = [{'channel_name':'ad'}]
 
 @app.route("/")
 def index():
@@ -59,6 +59,15 @@ def create(data):
 @app.route("/channels", methods=["POST"])
 def channels_load():
     return jsonify(channels)
+
+@app.route("/channel_names_check", methods=["POST"])
+def channel_names_check():
+    channel_name_ToCheck = request.form.get('channel_name')
+    channel_names_list = [d.get('channel_name', None) for d in channels]
+    if channel_name_ToCheck in channel_names_list:
+        return 'Channel already exsists'
+    else:
+        return 'Channel doesn\'t exist yet'
 
 if __name__ == '__main__':
     socketio.run(app)
