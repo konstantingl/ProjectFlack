@@ -1,28 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 
     <script id="channel_panel" type="text/template">
+      <div id="channel_list">
+      {% raw %}
+      {{#each this}}
+      <a href='{{url}}'>{{ url }}</a>
       <div class="panel panel-default">
-        <div class="panel-heading">{% raw -%}{{ channel_name }}{%- endraw %}</div>
-        <div class="panel-body">Made by {% raw -%}{{ channel_host }}{%- endraw %}</div>
+        <div class="panel-heading" id="channel_name_panel">{{ channel_name }}</div>
+        <div class="panel-body">Made by {{ channel_host }}</div>
       </div>
+      {{/each}}
+      {% endraw %}
+    </div>
     </script>
+
+    <script id="one_channel" type="text/template">
+      {% raw %}
+      <a href='{{url}}'>{{ url }}</a>
+      <div class="panel panel-default">
+        <div class="panel-heading" id="channel_name_panel">{{ channel_name }}</div>
+        <div class="panel-body">Made by {{ channel_host }}</div>
+      </div>
+      {% endraw %}
+    </script>
+
 
     <script type="text/javascript" src="static/js/Channel_creation.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/css/stylesheet.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
     <title>Welcome</title>
   </head>
   <body>
     <div class="container">
-          <h2>Hello, {{ name }}!</h2>
+          <div id="logout_panel">
+            <h2>Hello, {{ name }}!</h2>
+            <button id="logout_button" type="button" class="btn"><a onclick="href='{{ url_for('logout') }}'">Logout</a></button>
+          </div>
           <p>Here you can create a channel to start communication with other users on particular theme.
           <form id="channel_create_form">
             <div class="form-group">
@@ -31,8 +54,8 @@
               <p id="error" class="text-warning"></p>
             </div>
           </form>
-          <h3>Channel list<h3>
-          <div id="channel_list">
+          <h3>Channel list</h3>
+          <div id="channel_list_cover">
           </div>
   </div>
   </body>

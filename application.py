@@ -14,7 +14,7 @@ socketio = SocketIO(app)
 Session(app)
 
 users = []
-channels = [{'channel_name':'ad'}]
+channels = []
 
 @app.route("/")
 def index():
@@ -28,12 +28,13 @@ def login():
         name = request.form.get("nickname")
         if name in users:
             error = 'The name is taken'
+            return render_template ("index.html", error=error)
         else:
             users.append(name)
             session['name']=name
-            return render_template ("welcome.html", name=name, channels=channels)
-        return render_template ("index.html", error=error)
-    return render_template("index.html")
+            return redirect (url_for('homepage'))
+    else:
+        return render_template("index.html")
 
 @app.route("/homepage")
 def homepage():
@@ -52,7 +53,8 @@ def create(data):
     channel_name = data["channel_name"]
     channel_host = session.get('name')
     creation_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    channel = {'channel_name':channel_name, 'channel_host':channel_host, 'creation_time':creation_time}
+    url = '/homepage/channel/' + channel_name
+    channel = {'channel_name':channel_name, 'channel_host':channel_host, 'creation_time':creation_time, 'url':url}
     channels.append(channel)
     emit("announce creation", channel, broadcast=True)
 
@@ -68,6 +70,15 @@ def channel_names_check():
         return 'Channel already exsists'
     else:
         return 'Channel doesn\'t exist yet'
+
+# @app route("/message_open", methods=["POST", "GET"])
+# def message_open():
+#     if request.method = "POST":
+#
+
+@app.route("/homepage/channel/<channel_name>")
+def channel_open(channel_name):
+    return (channel_name)
 
 if __name__ == '__main__':
     socketio.run(app)
