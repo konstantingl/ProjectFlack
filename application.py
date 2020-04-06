@@ -22,6 +22,9 @@ channels = [{'channel_name':'Cosmos', 'channel_host':'Mike', 'creation_time':" 1
 
 @app.route("/")
 def index():
+    if 'url' in session:
+        url = session['url']
+        return redirect (url_for('channel_open', channel_name=url))
     return render_template ("index.html")
 
 @app.route("/login", methods=["POST", "GET"])
@@ -50,6 +53,7 @@ def homepage():
 @app.route("/logout")
 def logout():
     session.pop("name", None)
+    session.pop("url", None)
     return redirect(url_for("login"))
 
 @socketio.on("create channel")
@@ -81,6 +85,7 @@ def channel_names_check():
 def channel_open(channel_name):
     if 'name' in session:
         name = session.get('name')
+        session['url'] = channel_name
         return render_template ("messages.html", channel=channel_name, name=name)
     return render_template ("index.html")
 
@@ -102,6 +107,8 @@ def send(data):
 
     for i in channels:
         if i['channel_name'] == channel_name:
+            if len(i['messages']) > 99:
+                i['messages'].pop(0)
             i['messages'].append(message)
 
     emit("announce creation", message, broadcast=True)

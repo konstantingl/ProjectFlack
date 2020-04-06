@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   socket.on('connect', () =>{
   document.querySelector('#message_send').onsubmit = () => {
     const message = document.querySelector('#message').value;
+    document.querySelector('#message').value='';
     let channel_name = document.querySelector('#channel_name').innerHTML;
     socket.emit('send message', {'message': message, 'channel_name': channel_name});
     return false;
@@ -79,6 +80,7 @@ function style_channel(){
 function send_message(data) {
   const content = template_Message({'message_text': data.message_text, 'message_sender': data.message_sender, 'creation_time': data.creation_time});
   document.querySelector('#messages_list').innerHTML += content;
+  style_msg();
   autoscroll();
 };
 
