@@ -26,13 +26,29 @@
     </div>
     </script>
 
-    <script id="one_message" type="text/template">
+    <script id="own_message" type="text/template">
       {% raw %}
       <div class="outgoing_msg">
               <div class="sent_msg">
                 <div><p>{{message_text}}</p>
                   <span class="time_date">{{creation_time}}</span></div>
               </div>
+      {% endraw %}
+    </script>
+
+    <script id="others_message" type="text/template">
+      {% raw %}
+      <div class="incoming_msg">
+              <div class="sender_info_msg">
+                <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                <p id="message_sender">{{message_sender}}</p>
+              </div>
+              <div class="received_msg">
+                <div class="received_withd_msg">
+                  <p>{{message_text}}</p>
+                  <span class="time_date">{{creation_time}}</span></div>
+              </div>
+            </div>
       {% endraw %}
     </script>
 

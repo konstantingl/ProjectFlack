@@ -1,5 +1,6 @@
 const template = Handlebars.compile(document.querySelector('#messages_panel').innerHTML);
-const template_Message = Handlebars.compile(document.querySelector('#one_message').innerHTML);
+const template_own_message = Handlebars.compile(document.querySelector('#own_message').innerHTML);
+const template_others_message = Handlebars.compile(document.querySelector('#others_message').innerHTML);
 const template_channels = Handlebars.compile(document.querySelector('#channels_template').innerHTML);
 
 
@@ -78,8 +79,15 @@ function style_channel(){
 
 // send new message
 function send_message(data) {
-  const content = template_Message({'message_text': data.message_text, 'message_sender': data.message_sender, 'creation_time': data.creation_time});
-  document.querySelector('#messages_list').innerHTML += content;
+  var message_sender = localStorage.getItem('name');
+  if (data.message_sender == message_sender){
+    const content1 = template_own_message({'message_text': data.message_text, 'message_sender': data.message_sender, 'creation_time': data.creation_time});
+    document.querySelector('#messages_list').innerHTML += content1;
+  }
+  else {
+    const content2 = template_others_message({'message_text': data.message_text, 'message_sender': data.message_sender, 'creation_time': data.creation_time});
+    document.querySelector('#messages_list').innerHTML += content2;
+  }
   style_msg();
   autoscroll();
 };

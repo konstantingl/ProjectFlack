@@ -1,0 +1,32 @@
+<html>
+      <head>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+          <script id="test" type="text/template">
+              <div>
+                {% raw %}
+                  {{#each users}}
+                      <li class="user">{{this}}</li>
+                  {{/each}}
+                {% endraw %}
+              </div>
+          </script>
+
+          <script>
+              const template = Handlebars.compile(document.querySelector('#test').innerHTML);
+
+              document.addEventListener('DOMContentLoaded', () => {
+                      var users = ['Bob', 'Nick', 'Alice', 'Brian'];
+                      const content = template({'users': users});
+                      document.querySelector('#users_list').innerHTML = content;
+                      var list = document.getElementsByClassName('user');
+                      console.log(list);
+              });
+
+          </script>
+
+      </head>
+      <body>
+          <ul id="users_list">
+          </ul>
+      </body>
+  </html>
