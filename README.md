@@ -1,3 +1,3 @@
-# Project 2
+# Flack
 
-Web Programming with Python and JavaScript
+Messanger written with Python and JavaScript
